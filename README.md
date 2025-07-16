@@ -1,2 +1,0 @@
-# Nicoleva-Grocery
-Nicoleva Grocery
