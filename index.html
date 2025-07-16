@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nicoleva Grocery Hub – Your Trusted Online Grocery Partner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nicoleva Grocery Hub: Online grocery shopping in Metro Manila. Fresh produce, pantry essentials, secure payments, and fast delivery.">
+    <link rel="icon" type="image/png" href="FAVICON.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #376276;
+            --secondary: #55b6c9;
+            --accent: #eaf4f7;
+            --white: #fff;
+            --dark: #22313f;
+            --success: #a3d9ca;
+            --fade: #f6fbfd;
+            --highlight: #f0f5f7;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', 'Montserrat', Arial, sans-serif;
+            background: var(--accent);
+            color: var(--dark);
+        }
+        header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 0;
+            box-shadow: 0 2px 6px rgba(34,49,63,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.7rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .site-logo img {
+            height: 54px;
+            width: auto;
+            display: block;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.7rem;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            font-size: 1rem;
+            transition: color 0.2s;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary);
+            background: rgba(85,182,201,0.12);
+        }
+        @media (max-width: 900px) {
+            .nav-container { flex-wrap: wrap; }
+            .nav-links { gap: 1rem; }
+        }
+        @media (max-width: 600px) {
+            .nav-container { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .nav-links { flex-wrap: wrap; gap: 0.7rem; }
+        }
+        .hero-section {
+            background: linear-gradient(140deg, #376276 82%, #55b6c9 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 3.5rem 1rem 2.1rem 1rem;
+            position: relative;
+        }
+        .hero-section img {
+            width: 90px;
+            height: auto;
+            margin-bottom: 1.1rem;
+        }
+        .hero-section h1 {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.07em;
+        }
+        .hero-section p {
+            font-size: 1.18rem;
+            margin-bottom: 1.7rem;
+            font-weight: 400;
+        }
+        .hero-section .cta-main {
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.13rem;
+            padding: 1rem 2.2rem;
+            margin-top: 0.7rem;
+            cursor: pointer;
+            transition: background 0.17s, color 0.17s;
+        }
+        .hero-section .cta-main:hover {
+            background: var(--success);
+            color: var(--primary);
+        }
+        .quick-facts {
+            background: var(--fade);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2.2rem 1.2rem 2rem 1.2rem;
+        }
+        .fact-card {
+            flex: 1 1 200px;
+            min-width: 180px;
+            max-width: 290px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 1px 8px rgba(34,49,63,0.05);
+            padding: 1.5rem 1.1rem;
+            text-align: center;
+        }
+        .fact-card svg {
+            color: var(--secondary);
+            font-size: 2.2rem;
+            margin-bottom: 0.35rem;
+        }
+        .fact-card h3 {
+            font-size: 1.11rem;
+            margin-bottom: 0.2rem;
+            font-weight: 700;
+        }
+        .fact-card p {
+            font-size: 0.97rem;
+            color: #426175;
+        }
+        @media (max-width: 900px) {
+            .quick-facts { gap: 1rem; }
+        }
+        @media (max-width: 600px) {
+            .quick-facts { flex-direction: column; gap: 1rem; }
+        }
+        .section-heading {
+            text-align: center;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 2rem;
+            margin: 2.7rem 0 1.2rem 0;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+        .products-section {
+            background: var(--white);
+            padding-bottom: 2.5rem;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .product-card {
+            background: var(--highlight);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(55,98,118,0.07);
+            padding: 1.4rem 1rem 1.1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            transition: transform 0.11s;
+        }
+        .product-card:hover {
+            transform: translateY(-4px) scale(1.025);
+        }
+        .product-card .emoji {
+            font-size: 2.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .product-card h4 {
+            font-size: 1.09rem;
+            font-weight: 700;
+            margin-bottom: 0.14rem;
+            color: var(--primary);
+        }
+        .product-card ul {
+            list-style: disc;
+            padding-left: 1.1rem;
+            color: #355;
+            margin-bottom: 0.35rem;
+        }
+        .product-card .tag {
+            font-size: 0.85rem;
+            background: var(--secondary);
+            color: var(--white);
+            border-radius: 10px;
+            padding: 0.18rem 0.8rem;
+            margin-top: 0.25rem;
+            font-weight: 600;
+        }
+        .promo-strip {
+            background: var(--secondary);
+            color: var(--white);
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 1rem 0.7rem;
+        }
+        .about-main {
+            background: var(--fade);
+            padding: 2.1rem 1.5rem 2.1rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+        .about-content {
+            max-width: 600px;
+            flex: 1 1 340px;
+        }
+        .about-content h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+        }
+        .about-content p {
+            font-size: 1.09rem;
+            margin-bottom: 0.5rem;
+        }
+        .about-mission {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+            margin-top: 1rem;
+            box-shadow: 0 1px 6px rgba(34,49,63,0.03);
+            font-size: 1rem;
+        }
+        .about-mission strong {
+            color: var(--secondary);
+        }
+        @media (max-width: 900px) {
+            .about-main { flex-direction: column; gap: 1.2rem; }
+        }
+        .contact-section {
+            background: var(--white);
+            padding: 2.2rem 1.5rem;
+            border-top: 1px solid #e3e6ea;
+        }
+        .contact-main {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: center;
+        }
+        .contact-details, .contact-form {
+            flex: 1 1 300px;
+            max-width: 480px;
+        }
+        .contact-details h3 {
+            font-size: 1.17rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+        .contact-details ul {
+            list-style: none;
+            font-size: 1rem;
+        }
+        .contact-details li {
+            margin-bottom: 0.38rem;
+            display: flex;
+            align-items: center;
+        }
+        .contact-details li svg {
+            margin-right: 0.5rem;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        .contact-form h3 {
+            font-size: 1.11rem;
+            margin-bottom: 0.7rem;
+            color: var(--primary);
+        }
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.58rem;
+        }
+        .contact-form input, .contact-form textarea {
+            border: 1px solid #c2d4db;
+            border-radius: 5px;
+            padding: 0.6rem;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        .contact-form textarea { min-height: 80px; }
+        .contact-form button {
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 0.7rem 0;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .contact-form button:hover {
+            background: var(--primary);
+        }
+        .cart-section {
+            background: var(--fade);
+            padding: 2rem 1rem 2.2rem 1rem;
+            border-top: 2px solid var(--secondary);
+            max-width: 650px;
+            margin: 2.7rem auto 0 auto;
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(85,182,201,0.06);
+        }
+        .cart-section h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.35rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            margin-bottom: 1.1rem;
+        }
+        .cart-list {
+            list-style: none;
+            margin-bottom: 1.2rem;
+            padding: 0 0.3rem;
+        }
+        .cart-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #e3e7ea;
+            font-size: 1.01rem;
+        }
+        .cart-total {
+            text-align: right;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+        .testimonial-section {
+            background: var(--highlight);
+            padding: 2.1rem 1.2rem 2.2rem 1.2rem;
+        }
+        .testimonial-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.4rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            margin-bottom: 1.1rem;
+        }
+        .testimonial-list {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            justify-content: center;
+        }
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 1px 7px rgba(34,49,63,0.05);
+            padding: 1.1rem 1rem 1rem 1rem;
+            max-width: 330px;
+            font-size: 1rem;
+        }
+        .testimonial-card .author {
+            margin-top: 0.6rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        .testimonial-card .quote {
+            font-style: italic;
+            color: #355;
+        }
+        .testimonial-card .star {
+            color: gold;
+            font-size: 1.1em;
+        }
+        .policies-section {
+            background: var(--white);
+            color: var(--dark);
+            padding: 2.2rem 1.2rem 2.1rem 1.2rem;
+            border-top: 1px solid #e3e7ea;
+            font-size: 0.97rem;
+            max-width: 900px;
+            margin: 0 auto 2rem auto;
+            border-radius: 16px;
+            box-shadow: 0 1px 8px rgba(55,98,118,0.07);
+        }
+        .policies-section h3 {
+            color: var(--primary);
+            margin-bottom: 0.7rem;
+            font-size: 1.15rem;
+        }
+        .policies-section ul {
+            margin-left: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+        .policies-section li {
+            margin-bottom: 0.3rem;
+        }
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2.3rem 1.2rem 1rem 1.2rem;
+        }
+        .footer-main {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 2.2rem;
+            justify-content: space-between;
+        }
+        .footer-logo img {
+            height: 44px;
+            width: auto;
+            margin-bottom: 0.5rem;
+        }
+        .footer-info,
+        .footer-links,
+        .footer-contact {
+            list-style: none;
+            font-size: 1rem;
+        }
+        .footer-links a,
+        .footer-contact a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover,
+        .footer-contact a:hover {
+            color: var(--secondary);
+        }
+        .footer-legal {
+            color: #bcdbe5;
+            font-size: 0.89rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        @media (max-width: 650px) {
+            .footer-main { flex-direction: column; gap: 1.1rem; align-items: center; }
+            .footer-logo img { height: 30px; }
+        }
+
+        /* Floating Cart Button */
+        .floating-cart-btn {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 99;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            box-shadow: 0 3px 14px rgba(85,182,201,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+        }
+        .floating-cart-btn:hover, .floating-cart-btn:focus {
+            background: var(--primary);
+            color: var(--secondary);
+            box-shadow: 0 4px 16px rgba(55,98,118,0.18);
+            outline: none;
+        }
+        @media (max-width: 600px) {
+            .floating-cart-btn {
+                bottom: 18px;
+                right: 18px;
+                width: 54px;
+                height: 54px;
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+    <script>
+        // Scroll to cart section when floating button clicked
+        function scrollToCart() {
+            var cartSection = document.getElementById('cart');
+            if (cartSection) {
+                cartSection.scrollIntoView({behavior: 'smooth'});
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- HEADER NAVIGATION -->
+    <header>
+        <div class="nav-container">
+            <div class="site-logo">
+                <a href="/">
+                    <img src="LOGO.png" alt="Nicoleva Grocery Hub Logo">
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="#products">Products</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="home">
+        <img src="LOGO.png" alt="Nicoleva Grocery Hub Logo">
+        <h1>Nicoleva Grocery Hub</h1>
+        <p>Skip the hassle—get fresh, affordable groceries delivered straight to your door. The easiest way to shop for essentials, produce, and more in Metro Manila!</p>
+        <a href="#products" class="cta-main">Start Shopping</a>
+    </section>
+
+    <!-- QUICK FACTS SECTION -->
+    <section class="quick-facts">
+        <div class="fact-card">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 7v4a6 6 0 0 0 12 0V7"></path><path d="M21 8v3a8 8 0 0 1-16 0V8"></path><line x1="8" y1="21" x2="16" y2="21"></line></svg>
+            <h3>Same-Day Delivery</h3>
+            <p>Order by 4PM for fast delivery anywhere in Metro Manila.</p>
+        </div>
+        <div class="fact-card">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+            <h3>Fresh Daily</h3>
+            <p>Sourced every morning—packed & shipped same day for peak freshness.</p>
+        </div>
+        <div class="fact-card">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="4"></rect><path d="M16 3v4"></path></svg>
+            <h3>Secure Payments</h3>
+            <p>Choose GCash, Maya, card, bank transfer, or Cash on Delivery.</p>
+        </div>
+        <div class="fact-card">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><polyline points="7 10 12 15 17 10"></polyline></svg>
+            <h3>Friendly Support</h3>
+            <p>Real people, 7 days a week, to help you with your orders.</p>
+        </div>
+    </section>
+
+    <!-- PROMO STRIP -->
+    <div class="promo-strip">
+        🎉 Weekly Deals: Save more with sulit bundles and fresh arrivals! See <a href="#products" style="color:#fff;text-decoration:underline;">this week's promos</a>.
+    </div>
+
+    <!-- PRODUCTS SECTION -->
+    <section class="products-section" id="products">
+        <h2 class="section-heading">All the Essentials in One Place!</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="emoji">🥦</div>
+                <h4>Fresh Produce</h4>
+                <ul>
+                    <li>Lettuce, spinach, carrots, tomatoes, eggplant</li>
+                    <li>Mangoes, bananas, apples, oranges</li>
+                    <li>Organic & local options</li>
+                </ul>
+                <div class="tag">Fresh Daily</div>
+            </div>
+            <div class="product-card">
+                <div class="emoji">🧃</div>
+                <h4>Beverages</h4>
+                <ul>
+                    <li>Bottled water, soft drinks, fruit juices</li>
+                    <li>Coffee, milk teas, dairy alternatives</li>
+                </ul>
+                <div class="tag">Best Sellers</div>
+            </div>
+            <div class="product-card">
+                <div class="emoji">🍝</div>
+                <h4>Pantry Must-Haves</h4>
+                <ul>
+                    <li>Rice, pasta, canned goods, cooking oil</li>
+                    <li>Snacks, chips, cookies, noodles</li>
+                </ul>
+                <div class="tag">Sulit Bundles</div>
+            </div>
+            <div class="product-card">
+                <div class="emoji">🧴</div>
+                <h4>Household & Cleaning</h4>
+                <ul>
+                    <li>Dishwashing, laundry, disinfectants</li>
+                    <li>Trash bags, tissues, gloves</li>
+                </ul>
+                <div class="tag">Trusted Brands</div>
+            </div>
+            <div class="product-card">
+                <div class="emoji">🧀</div>
+                <h4>Dairy & Frozen Goods</h4>
+                <ul>
+                    <li>Cheese, butter, yogurt, cream</li>
+                    <li>Frozen meats, cold cuts, nuggets</li>
+                </ul>
+                <div class="tag">New Arrivals</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about-main" id="about">
+        <div class="about-content">
+            <h2>Meet Nicoleva Grocery Hub</h2>
+            <p>Founded in 2024 by two working moms in Pasig, Nicoleva Grocery Hub is a 100% Filipino-owned business dedicated to making grocery shopping simple and accessible for all.</p>
+            <p>We support local farmers and suppliers while offering your favorite brands. Whether restocking your pantry or shopping for fresh veggies, we're here for you!</p>
+            <div class="about-mission">
+                <strong>Mission:</strong> Deliver high-quality grocery products at fair prices, with fast and friendly service every day.<br>
+                <strong>Vision:</strong> Become Metro Manila’s most trusted online grocery for reliability & value.
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-section" id="contact">
+        <div class="contact-main">
+            <div class="contact-details">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10.5V6A2.5 2.5 0 0 0 18.5 3h-13A2.5 2.5 0 0 0 3 6v12a2.5 2.5 0 0 0 2.5 2.5h13a2.5 2.5 0 0 0 2.5-2.5V13.5"></path><polyline points="17 8 12 13 7 8"></polyline></svg>
+                        <a href="mailto:admin@nicolevagrocery.com">admin@nicolevagrocery.com</a>
+                    </li>
+                    <li>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 2.6a16 16 0 0 1-9 9 16 16 0 0 1-9-9"></path><circle cx="12" cy="12" r="10"></circle></svg>
+                        <a href="tel:+639175448867">+63 917 544 8867</a>
+                    </li>
+                    <li>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 7v4a6 6 0 0 0 12 0V7"></path></svg>
+                        Unit 204, Anson Square Bldg, E. Rodriguez Jr. Ave, Brgy Ugong, Pasig City, MM 1604
+                    </li>
+                    <li>
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+                        7:00AM – 9:00PM (Mon–Sun)
+                    </li>
+                    <li>
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 3.13v1.66A4 4 0 0 1 20 8.5v7a4 4 0 0 1-4 4.01H8a4 4 0 0 1-4-4V8.5A4 4 0 0 1 8 4.79V3.13"></path></svg>
+                        <a href="mailto:marketing@nicolevagrocery.com">marketing@nicolevagrocery.com</a>
+                    </li>
+                </ul>
+                <div style="margin-top:0.8rem;font-size:0.96rem;color:#376276;">
+                    VAT Reg. No.: 012-783-941-000<br>
+                    DTI Reg. No.: 04252025-NIC-GROC
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3>Send us a Message</h3>
+                <form name="contact" method="POST" data-netlify="true">
+                    <input type="text" name="name" required placeholder="Your Name">
+                    <input type="email" name="email" required placeholder="Your Email">
+                    <textarea name="message" required placeholder="Your Message"></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+                <div style="margin-top:0.5rem;font-size:0.93rem;color:#426175;">
+                    We respond to emails within 1–2 hours during operating hours.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CART SECTION -->
+    <section class="cart-section" id="cart">
+        <h2>Your Cart</h2>
+        <ul class="cart-list">
+            <li>
+                <span>Sample Product 1 × 2</span>
+                <span>₱120</span>
+            </li>
+            <li>
+                <span>Sample Product 2 × 1</span>
+                <span>₱89</span>
+            </li>
+        </ul>
+        <div class="cart-total">Total: ₱209</div>
+        <div style="text-align:center; color:#376276; margin-top:1rem;">
+            (Cart functionality coming soon!)
+        </div>
+    </section>
+
+    <!-- FLOATING CART BUTTON -->
+    <button class="floating-cart-btn" title="View Cart" onclick="scrollToCart()">
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </button>
+
+    <!-- TESTIMONIAL SECTION -->
+    <section class="testimonial-section" id="testimonials">
+        <div class="testimonial-title">Real Feedback from Real Customers</div>
+        <div class="testimonial-list">
+            <div class="testimonial-card">
+                <div class="quote">“Ang bilis ng delivery and super fresh ng veggies! First time ko mag-online grocery and now I’m hooked.”</div>
+                <div class="author">— Clarissa M., Taguig City</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="quote">“Affordable prices and legit items. Maayos yung packaging, walang leaks or dents.”</div>
+                <div class="author">— Kenneth L., Quezon City</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="quote">“GCash payment was smooth. Will definitely reorder. Highly recommended!”</div>
+                <div class="author">— Gemma R., Pasig City</div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:1.1rem; font-size:0.99rem;">
+            👉 Want to be featured? Send your feedback to <a href="mailto:feedback@nicolevagrocery.com" style="color:var(--primary); font-weight:600;">feedback@nicolevagrocery.com</a>!
+        </div>
+    </section>
+
+    <!-- POLICIES SECTION -->
+    <section class="policies-section" id="policies">
+        <h3>Privacy Policy</h3>
+        <p>
+            Nicoleva Grocery Hub is committed to protecting your privacy. We collect only the necessary data to process and deliver your orders, and to improve your experience. We do not share your information with third parties except as required by law or in order to fulfill your order. For privacy inquiries, contact <a href="mailto:admin@nicolevagrocery.com">admin@nicolevagrocery.com</a>.
+        </p>
+        <h3>Terms & Conditions</h3>
+        <ul>
+            <li>Order cut-off for same-day delivery is 4:00 PM.</li>
+            <li>All prices are VAT-inclusive. Free delivery for orders ₱1,500 and up.</li>
+            <li>Payment options: GCash, Maya, card, bank transfer, or COD for orders below ₱2,000.</li>
+            <li>Nicoleva reserves the right to refuse orders in cases of suspected fraud or abuse.</li>
+        </ul>
+        <h3>Return & Refund Policy</h3>
+        <ul>
+            <li>We accept returns for damaged, expired, or incorrect items within 24 hours of delivery.</li>
+            <li>Email <a href="mailto:admin@nicolevagrocery.com">admin@nicolevagrocery.com</a> with your order details and photos.</li>
+            <li>Refunds are processed within 5 business days after approval.</li>
+        </ul>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-main">
+            <div class="footer-logo">
+                <img src="LOGO.png" alt="Nicoleva Grocery Hub Logo">
+                <div style="font-size:1.08rem; font-weight:700; margin-bottom:0.2rem;">Nicoleva Grocery Hub</div>
+                <div style="font-size:0.97rem;">Grocery shopping made simple.</div>
+            </div>
+            <ul class="footer-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#policies">Policies</a></li>
+            </ul>
+            <ul class="footer-contact">
+                <li><a href="mailto:admin@nicolevagrocery.com">admin@nicolevagrocery.com</a></li>
+                <li><a href="tel:+639175448867">+63 917 544 8867</a></li>
+                <li>Unit 204, Anson Square Bldg, Pasig City</li>
+            </ul>
+        </div>
+        <div class="footer-legal">
+            &copy; 2024-2025 Nicoleva Grocery Hub. All Rights Reserved.<br>
+            Registered Business: DTI #04252025-NIC-GROC | VAT #012-783-941-000
+        </div>
+    </footer>
+</body>
+</html>
