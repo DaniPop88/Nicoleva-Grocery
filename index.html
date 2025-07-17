@@ -1449,7 +1449,7 @@
     })();
 
     // Add to Cart, Clear Cart, and Checkout Logic
-    var cart = [];
+    var cart = JSON.parse(localStorage.getItem('nicoleva_cart') || "[]");
     var productCards = document.querySelectorAll('.product-card');
     var cartItemsDiv = document.querySelector('.cart-items');
     var checkoutBtn = document.getElementById('checkoutBtn');
@@ -1477,6 +1477,7 @@
           btn.onclick = function(){
             var idx = parseInt(btn.getAttribute('data-idx'));
             cart.splice(idx, 1);
+            localStorage.setItem('nicoleva_cart', JSON.stringify(cart));
             updateCartDisplay();
           };
         });
@@ -1494,6 +1495,8 @@
           } else {
             cart.push({title: title, qty: 1});
           }
+          // ADD THIS LINE:
+          localStorage.setItem('nicoleva_cart', JSON.stringify(cart));
           updateCartDisplay();
           addedMsg.style.display = "block";
           setTimeout(function(){ addedMsg.style.display = "none"; }, 1300);
@@ -1504,6 +1507,7 @@
       if(cart.length > 0) {
         if(confirm("Clear all products from your cart?")) {
           cart = [];
+          localStorage.setItem('nicoleva_cart', JSON.stringify(cart)); // Save cleared cart
           updateCartDisplay();
         }
       }
@@ -1511,6 +1515,8 @@
     updateCartDisplay();
 
     checkoutBtn.onclick = function() {
+      // Save cart before navigating
+      localStorage.setItem('nicoleva_cart', JSON.stringify(cart));
       window.location.href = "order-summary.html";
     };
   </script>
