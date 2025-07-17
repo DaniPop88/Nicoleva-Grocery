@@ -891,6 +891,95 @@
       margin-top: 6px;
       display: none;
     }
+
+    /* Style tombol checkout dan popup */
+    .checkout-btn {
+      background: #2ecc71;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.07rem;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 32px;
+      margin: 16px 0 0 0;
+      cursor: pointer;
+      transition: background 0.18s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    .checkout-btn:disabled {
+      background: #a7e6c3;
+      cursor: not-allowed;
+      color: #ffffff;
+    }
+    .checkout-btn:hover:enabled {
+      background: #1fa95a;
+    }
+    .checkout-popup-bg {
+      position: fixed;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(57,72,92,0.57);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .checkout-popup-bg.active {
+      display: flex;
+    }
+    .checkout-popup {
+      background: #fff;
+      color: #376276;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      padding: 38px 32px 29px 32px;
+      text-align: center;
+      min-width: 320px;
+      max-width: 94vw;
+      width: 370px;
+      position: relative;
+      animation: popup-fade-in 0.22s;
+    }
+    .checkout-popup h3 {
+      margin-top: 0;
+      font-size: 1.38rem;
+      font-weight: 700;
+      color: #2ecc71;
+    }
+    .checkout-popup ul {
+      text-align: left;
+      margin: 14px 0 0 0;
+      padding: 0 0 0 18px;
+      color: #2a4d5e;
+      font-size: 1.06rem;
+    }
+    .checkout-popup .checkout-success {
+      color: #2ecc71;
+      font-weight: 700;
+      margin: 17px 0 0 0;
+      font-size: 1.13rem;
+    }
+    .checkout-popup .checkout-close {
+      position: absolute;
+      top: 10px;
+      right: 18px;
+      font-size: 1.6em;
+      background: none;
+      border: none;
+      color: #4cb1d4;
+      cursor: pointer;
+      font-weight: bold;
+      line-height: 1;
+    }
+    @media (max-width:500px){
+      .checkout-popup {
+        padding: 18px 4vw 14px 4vw;
+        min-width: 0;
+        width: 97vw;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1212,7 +1301,17 @@
       <div class="cart-items cart-empty">
         Your cart is currently empty.
       </div>
+      <button class="checkout-btn" id="checkoutBtn" disabled>Check Out</button>
     </section>
+    <div class="checkout-popup-bg" id="checkoutPopupBg">
+      <div class="checkout-popup" id="checkoutPopup">
+        <button class="checkout-close" id="checkoutCloseBtn" aria-label="Close Checkout">&times;</button>
+        <h3>Checkout Summary</h3>
+        <ul id="checkoutSummary"></ul>
+        <div id="checkoutSuccess" class="checkout-success" style="display:none;">Thank you! Your order has been placed.<br>We will contact you soon.</div>
+        <button class="checkout-btn" id="checkoutConfirmBtn">Confirm Order</button>
+      </div>
+    </div>
   </main>
   <footer>
     &copy; 2025 Nicoleva Grocery Hub &middot; 
@@ -1316,19 +1415,29 @@
       updateMenuDisplay();
     })();
 
-    // Add to Cart Logic for Product Categories
+    // Add to Cart and Checkout Logic
     var cart = [];
     var productCards = document.querySelectorAll('.product-card');
     var cartItemsDiv = document.querySelector('.cart-items');
+    var checkoutBtn = document.getElementById('checkoutBtn');
+    var checkoutPopupBg = document.getElementById('checkoutPopupBg');
+    var checkoutSummary = document.getElementById('checkoutSummary');
+    var checkoutPopup = document.getElementById('checkoutPopup');
+    var checkoutCloseBtn = document.getElementById('checkoutCloseBtn');
+    var checkoutConfirmBtn = document.getElementById('checkoutConfirmBtn');
+    var checkoutSuccess = document.getElementById('checkoutSuccess');
+
     function updateCartDisplay() {
       if(cart.length === 0) {
         cartItemsDiv.classList.add('cart-empty');
         cartItemsDiv.innerHTML = 'Your cart is currently empty.';
+        checkoutBtn.disabled = true;
       } else {
         cartItemsDiv.classList.remove('cart-empty');
         cartItemsDiv.innerHTML = cart.map(function(item){
           return `<div><b>${item.title}</b> <span style="color:#a1e1e7;">x${item.qty}</span></div>`;
         }).join('');
+        checkoutBtn.disabled = false;
       }
     }
     productCards.forEach(function(card){
@@ -1350,6 +1459,37 @@
       }
     });
     updateCartDisplay();
+
+    checkoutBtn.onclick = function() {
+      // show checkout summary
+      checkoutPopupBg.classList.add('active');
+      checkoutSuccess.style.display = "none";
+      checkoutSummary.innerHTML = cart.map(function(item){
+        return `<li>${item.title} <span style="color:#2ecc71;font-weight:600;">x${item.qty}</span></li>`;
+      }).join('');
+      checkoutConfirmBtn.style.display = "block";
+    };
+    checkoutCloseBtn.onclick = function() {
+      checkoutPopupBg.classList.remove('active');
+    };
+    checkoutPopupBg.onclick = function(e) {
+      if(e.target === this) checkoutPopupBg.classList.remove('active');
+    };
+    checkoutConfirmBtn.onclick = function() {
+      checkoutSuccess.style.display = "block";
+      checkoutConfirmBtn.style.display = "none";
+      // clear cart after short delay
+      setTimeout(function(){
+        cart = [];
+        updateCartDisplay();
+        // auto close popup after 2.5s
+        setTimeout(function(){
+          checkoutPopupBg.classList.remove('active');
+          checkoutSuccess.style.display = "none";
+          checkoutConfirmBtn.style.display = "block";
+        }, 1800);
+      }, 800);
+    };
   </script>
 </body>
 </html>
