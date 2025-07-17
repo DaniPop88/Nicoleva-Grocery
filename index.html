@@ -1345,21 +1345,12 @@
       <button class="clear-all-cart-btn" id="clearAllCartBtn" disabled>Clear All Cart</button>
       <button class="checkout-btn" id="checkoutBtn" disabled>Check Out</button>
     </section>
-    <div class="checkout-popup-bg" id="checkoutPopupBg">
-      <div class="checkout-popup" id="checkoutPopup">
-        <button class="checkout-close" id="checkoutCloseBtn" aria-label="Close Checkout">&times;</button>
-        <h3>Checkout Summary</h3>
-        <ul id="checkoutSummary"></ul>
-        <div id="checkoutSuccess" class="checkout-success" style="display:none;">Thank you! Your order has been placed.<br>We will contact you soon.</div>
-        <button class="checkout-btn" id="checkoutConfirmBtn">Confirm Order</button>
-      </div>
-    </div>
   </main>
   <footer>
     &copy; 2025 Nicoleva Grocery Hub &middot; 
-    <a href="#privacy">Privacy Policy</a> &middot; 
-    <a href="#terms">Terms</a> &middot; 
-    <a href="#returns">Returns</a>
+    <a href="privacy-policy.html">Privacy Policy</a> &middot; 
+    <a href="terms.html">Terms of Service</a> &middot; 
+    <a href="refund-policy.html">Refund Policy</a>
     <br>
     Block 7, Lot 4, Barangay Sta. Cruz, Antipolo, Rizal, Philippines &middot; 
     <a href="mailto:hello@nicolevagrocery.com">hello@nicolevagrocery.com</a> &middot; 
@@ -1462,12 +1453,6 @@
     var productCards = document.querySelectorAll('.product-card');
     var cartItemsDiv = document.querySelector('.cart-items');
     var checkoutBtn = document.getElementById('checkoutBtn');
-    var checkoutPopupBg = document.getElementById('checkoutPopupBg');
-    var checkoutSummary = document.getElementById('checkoutSummary');
-    var checkoutPopup = document.getElementById('checkoutPopup');
-    var checkoutCloseBtn = document.getElementById('checkoutCloseBtn');
-    var checkoutConfirmBtn = document.getElementById('checkoutConfirmBtn');
-    var checkoutSuccess = document.getElementById('checkoutSuccess');
     var clearAllCartBtn = document.getElementById('clearAllCartBtn');
 
     function updateCartDisplay() {
@@ -1526,34 +1511,7 @@
     updateCartDisplay();
 
     checkoutBtn.onclick = function() {
-      // show checkout summary
-      checkoutPopupBg.classList.add('active');
-      checkoutSuccess.style.display = "none";
-      checkoutSummary.innerHTML = cart.map(function(item){
-        return `<li>${item.title} <span style="color:#2ecc71;font-weight:600;">x${item.qty}</span></li>`;
-      }).join('');
-      checkoutConfirmBtn.style.display = "block";
-    };
-    checkoutCloseBtn.onclick = function() {
-      checkoutPopupBg.classList.remove('active');
-    };
-    checkoutPopupBg.onclick = function(e) {
-      if(e.target === this) checkoutPopupBg.classList.remove('active');
-    };
-    checkoutConfirmBtn.onclick = function() {
-      checkoutSuccess.style.display = "block";
-      checkoutConfirmBtn.style.display = "none";
-      // clear cart after short delay
-      setTimeout(function(){
-        cart = [];
-        updateCartDisplay();
-        // auto close popup after 2.5s
-        setTimeout(function(){
-          checkoutPopupBg.classList.remove('active');
-          checkoutSuccess.style.display = "none";
-          checkoutConfirmBtn.style.display = "block";
-        }, 1800);
-      }, 800);
+      window.location.href = "order-summary.html";
     };
   </script>
 </body>
