@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Summary – Nicoleva Grocery Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Review and confirm your grocery order. Nicoleva Grocery Hub – Fast, secure checkout for your Antipolo essentials.">
+  <link rel="icon" type="image/png" href="FAVICON.png">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: #f4f7fa;
+      margin: 0;
+      color: #20425a;
+    }
+    .summary-container {
+      max-width: 520px;
+      margin: 34px auto;
+      background: #fff;
+      padding: 32px 22px 30px 22px;
+      border-radius: 16px;
+      box-shadow: 0 6px 36px rgba(52, 118, 146, 0.11);
+    }
+    .brand-logo {
+      display: block;
+      margin: 0 auto 16px auto;
+      width: 88px;
+      height: 88px;
+      border-radius: 17px;
+      object-fit: contain;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(76, 177, 212, 0.10);
+      border: 2px solid #4cb1d4;
+    }
+    h1 {
+      color: #376276;
+      text-align: center;
+      font-weight: 700;
+      font-size: 2em;
+      margin-bottom: 6px;
+      letter-spacing: 1.2px;
+    }
+    .subtitle {
+      color: #4cb1d4;
+      text-align: center;
+      margin-bottom: 22px;
+      font-size: 1.06em;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+    }
+    ul.order-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 0;
+    }
+    ul.order-list li {
+      font-size: 1.08em;
+      margin-bottom: 10px;
+      color: #376276;
+    }
+    .order-total {
+      font-weight: bold;
+      font-size: 1.18em;
+      color: #2ecc71;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      letter-spacing: 0.03em;
+    }
+    .empty-cart {
+      color: #a0b8c8;
+      text-align: center;
+      font-size: 1.06em;
+      margin: 28px 0 34px 0;
+    }
+    form.checkout-form {
+      margin-top: 26px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: 600;
+      color: #376276;
+      display: block;
+      margin-bottom: 6px;
+    }
+    input, select, textarea {
+      width: 100%;
+      font-size: 1em;
+      padding: 10px 11px;
+      border-radius: 7px;
+      border: 1px solid #c7d6e2;
+      background: #f8fbfc;
+      box-sizing: border-box;
+      font-family: inherit;
+      color: #20425a;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 50px;
+    }
+    .required {
+      color: #e74c3c;
+      font-weight: 700;
+      margin-left: 2px;
+    }
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 2px;
+    }
+    .payment-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 0;
+    }
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 14px;
+      border: 1.5px solid #e2f3f6;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #f4f7fa;
+      transition: border 0.18s, background 0.18s;
+      font-size: 1.07em;
+      flex: 1;
+      user-select: none;
+    }
+    .payment-option.selected {
+      border: 2px solid #4cb1d4;
+      background: #e2f3f6;
+    }
+    .payment-icon {
+      width: 31px;
+      height: 31px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 7px;
+      box-shadow: 0 1px 4px rgba(76, 177, 212, 0.11);
+    }
+    .hidden-radio {
+      display: none;
+    }
+    .submit-btn {
+      width: 100%;
+      background: #4cb1d4;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 0;
+      font-size: 1.13em;
+      cursor: pointer;
+      font-weight: 700;
+      margin-top: 12px;
+      transition: background 0.19s;
+    }
+    .submit-btn:hover, .submit-btn:focus {
+      background: #376276;
+      outline: none;
+    }
+    .success-message {
+      background: #e2f3f6;
+      color: #376276;
+      border: 1px solid #c7d6e2;
+      border-radius: 9px;
+      padding: 18px 13px;
+      margin: 28px 0 16px 0;
+      text-align: center;
+      font-size: 1.08em;
+      font-weight: 600;
+    }
+    .info-box {
+      background: #f4f7fa;
+      border-left: 4px solid #4cb1d4;
+      border-radius: 8px;
+      padding: 17px 18px;
+      margin: 33px 0 0 0;
+      color: #20425a;
+      font-size: 1.05em;
+      box-shadow: 0 1px 4px rgba(76, 177, 212, 0.06);
+    }
+    .info-box strong {
+      color: #4cb1d4;
+    }
+    .info-title {
+      font-size: 1.12em;
+      font-weight: 700;
+      color: #376276;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .info-content {
+      margin-left: 2em;
+      margin-bottom: 12px;
+      margin-top: 4px;
+    }
+    .info-content ul {
+      margin: 8px 0 8px 1.4em;
+      padding-left: 0;
+    }
+    .back-btn {
+      display: block;
+      margin: 26px auto 0 auto;
+      background: #4cb1d4;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 38px;
+      font-size: 1.07em;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      box-shadow: 0 2px 8px rgba(76, 177, 212, 0.13);
+      min-width: 160px;
+    }
+    .back-btn:hover, .back-btn:focus {
+      background: #376276;
+      color: #fff;
+      outline: none;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(76, 177, 212, 0.18);
+    }
+    @media (max-width:650px) {
+      .summary-container { padding: 14px 5vw 16px 5vw; }
+      .brand-logo { width: 56px; height: 56px; }
+      .back-btn { min-width: 110px; padding: 12px 18px; font-size: 1em; }
+      .payment-option { font-size:1em; }
+      .payment-icon { width: 24px; height: 24px; }
+    }
+    @media (max-width:500px) {
+      .summary-container { max-width: 99vw; border-radius: 0; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="summary-container">
+    <img src="LOGO.png" alt="Nicoleva Grocery Hub Logo" class="brand-logo" loading="lazy" width="88" height="88">
+    <h1>Order Summary</h1>
+    <div class="subtitle">Review your items and complete the checkout below</div>
+    <ul class="order-list" id="order-list"></ul>
+    <div class="order-total" id="order-total"></div>
+    <form class="checkout-form" id="checkout-form" autocomplete="off" method="POST" action="#">
+      <div class="form-group">
+        <label for="name">Full Name <span class="required">*</span></label>
+        <input type="text" id="name" name="name" maxlength="60" required>
+      </div>
+      <div class="form-group">
+        <label for="address">Delivery Address <span class="required">*</span></label>
+        <textarea id="address" name="address" maxlength="120" required></textarea>
+      </div>
+      <div style="display:flex; gap:11px;">
+        <div class="form-group" style="flex:1;">
+          <label for="barangay">Barangay <span class="required">*</span></label>
+          <input type="text" id="barangay" name="barangay" maxlength="30" required>
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label for="city">City <span class="required">*</span></label>
+          <input type="text" id="city" name="city" maxlength="30" required value="Antipolo">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="contact">Phone Number <span class="required">*</span></label>
+        <input type="tel" id="contact" name="contact" maxlength="15" pattern="^09\\d{9}$" placeholder="Ex: 09XXXXXXXXX" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address <span class="required">*</span></label>
+        <input type="email" id="email" name="email" maxlength="80" required>
+      </div>
+      <div class="form-group">
+        <label for="notes">Order Notes (Optional)</label>
+        <textarea id="notes" name="notes" maxlength="120" placeholder="Any requests, preferred brands, etc."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Preferred Payment Method <span class="required">*</span></label>
+        <div class="payment-methods" id="payment-methods"></div>
+        <input type="hidden" name="payment" id="payment-hidden" required>
+      </div>
+      <input type="hidden" name="order_details" id="order-details-hidden">
+      <button type="submit" class="submit-btn">Place Order</button>
+    </form>
+    <div class="success-message" id="success-message" style="display:none;">
+      Your order has been received!<br><br>
+      One of our team members will reach out soon to confirm your order details—including product selection, available colors, and delivery schedule.<br>
+      <b>Please review and confirm these details with our staff.</b><br><br>
+      After confirmation, you’ll receive a secure payment link according to your chosen payment method.<br>
+      <span style="color:#e74c3c;font-weight:700;">Please complete payment within 24 hours to avoid automatic cancellation.</span>
+    </div>
+    <div class="info-box">
+      <strong>Order Processing & Customer Support</strong>
+      <p style="margin:14px 0 16px 0;">
+        Thank you for choosing Nicoleva Grocery Hub.<br>
+        Please take note of our order process:
+      </p>
+      <div class="info-title">📅 Store Hours</div>
+      <div class="info-content">
+        <b>Monday to Saturday:</b> 8:30 AM – 7:00 PM<br>
+        <b>Sunday:</b> 9:00 AM – 4:00 PM
+      </div>
+      <div class="info-title">🔎 Order Confirmation Process</div>
+      <div class="info-content">
+        After submitting, our staff will contact you directly to confirm product details, available brands, and preferences.<br>
+        <ul>
+          <li>Verify item selection, quantity, and color/variant as needed</li>
+          <li>Confirm delivery address and time slot</li>
+          <li>Review your final order total and applicable fees</li>
+        </ul>
+        Once confirmed, we’ll send your payment link or QR code.
+      </div>
+      <div class="info-title">⏳ Payment Deadline</div>
+      <div class="info-content">
+        To secure your order, payment must be completed within <b>24 hours</b> of receiving the link.<br>
+        Unpaid orders will be cancelled automatically after this period.
+      </div>
+      <div class="info-title">🚚 Delivery Timeline</div>
+      <div class="info-content">
+        Orders placed before 3:00 PM are eligible for same-day delivery within Antipolo and nearby barangays.<br>
+        Delivery time may vary based on location and weather.
+      </div>
+      <div class="info-title">📩 Need Help?</div>
+      <div class="info-content">
+        For any questions, you may contact us at <a href="mailto:hello@nicolevagrocery.com">hello@nicolevagrocery.com</a> or call/text <b>+63 917 938 1026</b>.<br>
+        Our team is happy to assist you.
+      </div>
+      <div style="margin-top:17px;">
+        We appreciate your trust in Nicoleva Grocery Hub.<br>
+        Providing quality groceries and service—always for your family!
+      </div>
+    </div>
+    <a href="index.html" class="back-btn">← Back to Shop</a>
+  </div>
+  <script>
+    // Payment Method Setup
+    const paymentGroups = [
+      [{ name: "GCash", icon: "assets/gcash.png" }],
+      [{ name: "Maya", icon: "assets/maya.png" }, { name: "Bank Transfer", icon: "assets/bank.png" }],
+      [{ name: "Cash on Delivery", icon: "" }]
+    ];
+    const paymentMethodsDiv = document.getElementById('payment-methods');
+    let paymentIdx = 0;
+    paymentGroups.forEach((group) => {
+      let groupDiv = document.createElement('div');
+      groupDiv.className = 'payment-row';
+      group.forEach(platform => {
+        let container = document.createElement('div');
+        container.className = 'payment-option';
+        container.tabIndex = 0;
+        container.setAttribute('role', 'radio');
+        container.setAttribute('aria-checked', 'false');
+        container.style.flex = "1";
+        let html = `<input type="radio" class="hidden-radio" name="pmethod" id="pmethod${paymentIdx}" value="${platform.name}">`;
+        if (platform.icon) html += `<img src="${platform.icon}" class="payment-icon" alt="${platform.name}">`;
+        html += `<span>${platform.name}</span>`;
+        container.innerHTML = html;
+        container.addEventListener('click', function(e) {
+          document.querySelectorAll('.payment-option').forEach((el, i) => {
+            el.classList.toggle('selected', el === container);
+            el.setAttribute('aria-checked', el === container ? 'true' : 'false');
+            el.querySelector('.hidden-radio').checked = el === container;
+          });
+          document.getElementById('payment-hidden').value = platform.name;
+        });
+        container.addEventListener('keydown', function(e) {
+          if (e.key === "Enter" || e.key === " ") container.click();
+        });
+        groupDiv.appendChild(container);
+        paymentIdx++;
+      });
+      paymentMethodsDiv.appendChild(groupDiv);
+    });
+
+    // Get cart from localStorage
+    const cart = JSON.parse(localStorage.getItem('nicoleva_cart') || "[]");
+    const orderList = document.getElementById('order-list');
+    const orderTotal = document.getElementById('order-total');
+    let total = 0;
+    if (cart.length === 0) {
+      orderList.innerHTML = "<li class='empty-cart'>Your cart is empty.</li>";
+      orderTotal.textContent = "";
+      document.getElementById('checkout-form').style.display = "none";
+    } else {
+      let detailsText = "";
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.title} x ${item.qty}`;
+        orderList.appendChild(li);
+        total += (item.price ? (item.price * item.qty) : 0);
+        detailsText += `${item.title} x ${item.qty}${item.price ? ' - ₱' + (item.price * item.qty).toLocaleString() : ''}\n`;
+      });
+      orderTotal.textContent = total > 0 ? `Total: ₱${total.toLocaleString()}` : '';
+      document.getElementById('order-details-hidden').value = detailsText + (total > 0 ? `Total: ₱${total.toLocaleString()}` : '');
+    }
+
+    // Form validation & submit
+    document.getElementById('checkout-form').onsubmit = function(e){
+      if (!document.getElementById('payment-hidden').value) {
+        alert("Please select your payment method.");
+        return false;
+      }
+      const name = document.getElementById('name').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const barangay = document.getElementById('barangay').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const contact = document.getElementById('contact').value.trim();
+      const email = document.getElementById('email').value.trim();
+      if (!name || !address || !barangay || !city || !contact || !email) {
+        alert("Please fill out all required fields.");
+        return false;
+      }
+      if (!/^09\d{9}$/.test(contact)) {
+        alert("Please enter a valid Philippine mobile number (09XXXXXXXXX).");
+        document.getElementById('contact').focus();
+        return false;
+      }
+      setTimeout(function() {
+        document.getElementById('checkout-form').style.display = "none";
+        document.getElementById('success-message').style.display = "";
+        localStorage.removeItem('nicoleva_cart');
+        orderList.innerHTML = "<li class='empty-cart'>Your cart is empty.</li>";
+        orderTotal.textContent = "";
+      }, 1200);
+    };
+  </script>
+</body>
+</html>
