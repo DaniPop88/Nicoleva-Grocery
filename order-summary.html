@@ -2,430 +2,390 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Order Summary – Nicoleva Grocery Hub</title>
+  <title>Order Review – Nicoleva Grocery Hub Checkout</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Review and confirm your grocery order. Nicoleva Grocery Hub – Fast, secure checkout for your Antipolo essentials.">
+  <meta name="description" content="Secure your order at Nicoleva Grocery Hub. Review your cart, confirm details, and complete payment safely.">
   <link rel="icon" type="image/png" href="FAVICON.png">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #376276;
+      --accent: #4cb1d4;
+      --section-bg: #3b596a;
+      --white: #fff;
+      --text-main: #f4f7fa;
+      --text-alt: #e2f3f6;
+      --danger: #e74c3c;
+      --success: #2ecc71;
+      --shadow: 0 2px 16px rgba(30,60,74,0.09);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      min-height: 100%;
+      height: 100%;
+    }
     body {
-      font-family: 'Montserrat', Arial, sans-serif;
-      background: #f4f7fa;
       margin: 0;
-      color: #20425a;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--primary);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
     }
-    .summary-container {
-      max-width: 520px;
-      margin: 34px auto;
-      background: #fff;
-      padding: 32px 22px 30px 22px;
-      border-radius: 16px;
-      box-shadow: 0 6px 36px rgba(52, 118, 146, 0.11);
-    }
-    .brand-logo {
-      display: block;
-      margin: 0 auto 16px auto;
-      width: 88px;
-      height: 88px;
-      border-radius: 17px;
-      object-fit: contain;
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(76, 177, 212, 0.10);
-      border: 2px solid #4cb1d4;
-    }
-    h1 {
-      color: #376276;
-      text-align: center;
-      font-weight: 700;
-      font-size: 2em;
-      margin-bottom: 6px;
-      letter-spacing: 1.2px;
-    }
-    .subtitle {
-      color: #4cb1d4;
-      text-align: center;
-      margin-bottom: 22px;
-      font-size: 1.06em;
-      font-weight: 500;
-      letter-spacing: 0.6px;
-    }
-    ul.order-list {
-      list-style: none;
+    header {
+      background: var(--primary);
+      box-shadow: var(--shadow);
       padding: 0;
-      margin-bottom: 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-    ul.order-list li {
-      font-size: 1.08em;
-      margin-bottom: 10px;
-      color: #376276;
+    .container {
+      width: 94%;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 0 32px 0;
     }
-    .order-total {
-      font-weight: bold;
-      font-size: 1.18em;
-      color: #2ecc71;
-      margin-top: 16px;
-      margin-bottom: 8px;
-      letter-spacing: 0.03em;
-    }
-    .empty-cart {
-      color: #a0b8c8;
-      text-align: center;
-      font-size: 1.06em;
-      margin: 28px 0 34px 0;
-    }
-    form.checkout-form {
-      margin-top: 26px;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    label {
-      font-weight: 600;
-      color: #376276;
-      display: block;
-      margin-bottom: 6px;
-    }
-    input, select, textarea {
-      width: 100%;
-      font-size: 1em;
-      padding: 10px 11px;
-      border-radius: 7px;
-      border: 1px solid #c7d6e2;
-      background: #f8fbfc;
-      box-sizing: border-box;
-      font-family: inherit;
-      color: #20425a;
-    }
-    textarea {
-      resize: vertical;
-      min-height: 50px;
-    }
-    .required {
-      color: #e74c3c;
-      font-weight: 700;
-      margin-left: 2px;
-    }
-    .payment-methods {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      margin-bottom: 2px;
-    }
-    .payment-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 0;
-    }
-    .payment-option {
+    .checkout-header {
       display: flex;
       align-items: center;
-      gap: 9px;
-      padding: 8px 14px;
-      border: 1.5px solid #e2f3f6;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #f4f7fa;
-      transition: border 0.18s, background 0.18s;
-      font-size: 1.07em;
-      flex: 1;
-      user-select: none;
+      justify-content: center;
+      padding: 22px 0 16px 0;
+      gap: 12px;
     }
-    .payment-option.selected {
-      border: 2px solid #4cb1d4;
-      background: #e2f3f6;
+    .checkout-header img {
+      width: 48px;
+      height: 48px;
+      background: var(--white);
+      border-radius: 13px;
+      padding: 7px;
+      box-shadow: var(--shadow);
     }
-    .payment-icon {
-      width: 31px;
-      height: 31px;
-      object-fit: contain;
-      background: #fff;
-      border-radius: 7px;
-      box-shadow: 0 1px 4px rgba(76, 177, 212, 0.11);
-    }
-    .hidden-radio {
-      display: none;
-    }
-    .submit-btn {
-      width: 100%;
-      background: #4cb1d4;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 13px 0;
-      font-size: 1.13em;
-      cursor: pointer;
+    .checkout-title {
+      font-size: 1.35rem;
       font-weight: 700;
-      margin-top: 12px;
-      transition: background 0.19s;
+      color: var(--white);
+      letter-spacing: 1px;
     }
-    .submit-btn:hover, .submit-btn:focus {
-      background: #376276;
-      outline: none;
+    main {
+      margin-top: 14px;
     }
-    .success-message {
-      background: #e2f3f6;
-      color: #376276;
-      border: 1px solid #c7d6e2;
-      border-radius: 9px;
-      padding: 18px 13px;
-      margin: 28px 0 16px 0;
-      text-align: center;
-      font-size: 1.08em;
+    .summary-section {
+      background: var(--section-bg);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 30px 6% 24px 6%;
+      margin-bottom: 24px;
+    }
+    .summary-title {
+      font-size: 1.16rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 19px;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+    .cart-list {
+      width: 100%;
+      margin-bottom: 14px;
+    }
+    .cart-list th, .cart-list td {
+      padding: 7px 5px;
+      text-align: left;
+    }
+    .cart-list th {
+      color: var(--accent);
+      font-size: 1.03rem;
       font-weight: 600;
+      border-bottom: 1px solid #49748a;
     }
-    .info-box {
-      background: #f4f7fa;
-      border-left: 4px solid #4cb1d4;
-      border-radius: 8px;
-      padding: 17px 18px;
-      margin: 33px 0 0 0;
-      color: #20425a;
-      font-size: 1.05em;
-      box-shadow: 0 1px 4px rgba(76, 177, 212, 0.06);
+    .cart-list td {
+      color: var(--white);
+      font-size: 1rem;
     }
-    .info-box strong {
-      color: #4cb1d4;
+    .cart-list tfoot td {
+      font-weight: 700;
+      color: #ffe18d;
+      border-top: 1px solid #49748a;
+      padding-top: 11px;
+    }
+    .order-form-section {
+      background: var(--card-bg);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 28px 6% 20px 6%;
+      margin-bottom: 20px;
+    }
+    .form-title {
+      font-size: 1.11rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 13px;
+      letter-spacing: 0.5px;
+    }
+    .order-form label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .order-form input,
+    .order-form textarea,
+    .order-form select {
+      width: 100%;
+      padding: 9px 10px;
+      margin-bottom: 14px;
+      border: 1px solid #c7d6e2;
+      border-radius: 7px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: var(--white);
+      color: var(--primary);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .order-form textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    .order-form button {
+      background: var(--accent);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1.08rem;
+      border: none;
+      border-radius: 6px;
+      padding: 13px 0;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.16s;
+      margin-top: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.09);
+    }
+    .order-form button:hover {
+      background: #357b92;
+    }
+    .info-section {
+      background: var(--section-bg);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 24px 6% 20px 6%;
+      margin-bottom: 22px;
+      color: var(--white);
     }
     .info-title {
-      font-size: 1.12em;
+      font-size: 1.09rem;
       font-weight: 700;
-      color: #376276;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.4px;
     }
-    .info-content {
-      margin-left: 2em;
-      margin-bottom: 12px;
-      margin-top: 4px;
+    .info-section ul {
+      margin: 0 0 0 17px;
+      padding: 0;
     }
-    .info-content ul {
-      margin: 8px 0 8px 1.4em;
-      padding-left: 0;
+    .info-section li {
+      margin-bottom: 8px;
+      font-size: 0.97rem;
+      color: var(--text-alt);
+      line-height: 1.6;
     }
-    .back-btn {
-      display: block;
-      margin: 26px auto 0 auto;
-      background: #4cb1d4;
+    .success-section {
+      background: var(--success);
       color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 14px 38px;
-      font-size: 1.07em;
-      font-weight: bold;
-      cursor: pointer;
+      border-radius: 13px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      padding: 35px 8% 24px 8%;
+      margin-top: 34px;
       text-align: center;
+      font-size: 1.16rem;
+      font-weight: 600;
+      display: none;
+      animation: fade-in 0.2s;
+    }
+    @keyframes fade-in {
+      from { opacity: 0; transform: scale(0.98);}
+      to   { opacity: 1; transform: scale(1);}
+    }
+    .emph {
+      color: #ffe18d;
+      font-weight: 700;
+    }
+    footer {
+      background: #2d4956;
+      color: #d2e9f0;
+      text-align: center;
+      padding: 18px 0 10px 0;
+      font-size: 0.97rem;
+      border-radius: 0 0 14px 14px;
+      margin-top: 20px;
+    }
+    footer a {
+      color: #a1e1e7;
       text-decoration: none;
-      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-      box-shadow: 0 2px 8px rgba(76, 177, 212, 0.13);
-      min-width: 160px;
+      margin: 0 7px;
     }
-    .back-btn:hover, .back-btn:focus {
-      background: #376276;
-      color: #fff;
-      outline: none;
-      text-decoration: none;
-      box-shadow: 0 4px 14px rgba(76, 177, 212, 0.18);
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .container {
+        max-width: 96vw;
+        width: 98vw;
+        padding: 0 0 22px 0;
+      }
+      .checkout-header img { width: 38px; height: 38px; }
+      .success-section { padding: 22px 4% 18px 4%; }
     }
-    @media (max-width:650px) {
-      .summary-container { padding: 14px 5vw 16px 5vw; }
-      .brand-logo { width: 56px; height: 56px; }
-      .back-btn { min-width: 110px; padding: 12px 18px; font-size: 1em; }
-      .payment-option { font-size:1em; }
-      .payment-icon { width: 24px; height: 24px; }
-    }
-    @media (max-width:500px) {
-      .summary-container { max-width: 99vw; border-radius: 0; margin: 0; }
+    @media (max-width: 480px) {
+      .container { padding: 0 0 8vw 0; }
+      .summary-section, .order-form-section, .info-section { padding-left: 4%; padding-right: 4%; }
+      .checkout-title { font-size: 1.03rem; }
+      .success-section { font-size: 1.01rem; }
+      .cart-list th, .cart-list td { font-size: 0.99rem; }
     }
   </style>
 </head>
 <body>
-  <div class="summary-container">
-    <img src="LOGO.png" alt="Nicoleva Grocery Hub Logo" class="brand-logo" loading="lazy" width="88" height="88">
-    <h1>Order Summary</h1>
-    <div class="subtitle">Review your items and complete the checkout below</div>
-    <ul class="order-list" id="order-list"></ul>
-    <div class="order-total" id="order-total"></div>
-    <form class="checkout-form" id="checkout-form" autocomplete="off" method="POST" action="#">
-      <div class="form-group">
-        <label for="name">Full Name <span class="required">*</span></label>
-        <input type="text" id="name" name="name" maxlength="60" required>
-      </div>
-      <div class="form-group">
-        <label for="address">Delivery Address <span class="required">*</span></label>
-        <textarea id="address" name="address" maxlength="120" required></textarea>
-      </div>
-      <div style="display:flex; gap:11px;">
-        <div class="form-group" style="flex:1;">
-          <label for="barangay">Barangay <span class="required">*</span></label>
-          <input type="text" id="barangay" name="barangay" maxlength="30" required>
-        </div>
-        <div class="form-group" style="flex:1;">
-          <label for="city">City <span class="required">*</span></label>
-          <input type="text" id="city" name="city" maxlength="30" required value="Antipolo">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="contact">Phone Number <span class="required">*</span></label>
-        <input type="tel" id="contact" name="contact" maxlength="15" pattern="^09\\d{9}$" placeholder="Ex: 09XXXXXXXXX" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email Address <span class="required">*</span></label>
-        <input type="email" id="email" name="email" maxlength="80" required>
-      </div>
-      <div class="form-group">
-        <label for="notes">Order Notes (Optional)</label>
-        <textarea id="notes" name="notes" maxlength="120" placeholder="Any requests, preferred brands, etc."></textarea>
-      </div>
-      <div class="form-group">
-        <label>Preferred Payment Method <span class="required">*</span></label>
-        <div class="payment-methods" id="payment-methods"></div>
-        <input type="hidden" name="payment" id="payment-hidden" required>
-      </div>
-      <input type="hidden" name="order_details" id="order-details-hidden">
-      <button type="submit" class="submit-btn">Place Order</button>
-    </form>
-    <div class="success-message" id="success-message" style="display:none;">
-      Your order has been received!<br><br>
-      One of our team members will reach out soon to confirm your order details—including product selection, available colors, and delivery schedule.<br>
-      <b>Please review and confirm these details with our staff.</b><br><br>
-      After confirmation, you’ll receive a secure payment link according to your chosen payment method.<br>
-      <span style="color:#e74c3c;font-weight:700;">Please complete payment within 24 hours to avoid automatic cancellation.</span>
+  <header>
+    <div class="container checkout-header">
+      <img src="LOGO.png" alt="Nicoleva Grocery Hub Logo" loading="lazy">
+      <span class="checkout-title">Order Review & Confirmation</span>
     </div>
-    <div class="info-box">
-      <strong>Order Processing & Customer Support</strong>
-      <p style="margin:14px 0 16px 0;">
-        Thank you for choosing Nicoleva Grocery Hub.<br>
-        Please take note of our order process:
-      </p>
-      <div class="info-title">📅 Store Hours</div>
-      <div class="info-content">
-        <b>Monday to Saturday:</b> 8:30 AM – 7:00 PM<br>
-        <b>Sunday:</b> 9:00 AM – 4:00 PM
-      </div>
-      <div class="info-title">🔎 Order Confirmation Process</div>
-      <div class="info-content">
-        After submitting, our staff will contact you directly to confirm product details, available brands, and preferences.<br>
+  </header>
+  <main>
+    <div class="container">
+      <!-- Order Summary -->
+      <section class="summary-section" id="summarySection">
+        <div class="summary-title">Your Cart Overview</div>
+        <table class="cart-list" id="cartList">
+          <thead>
+            <tr>
+              <th style="width:36%;">Product</th>
+              <th style="width:22%;">Qty</th>
+              <th style="width:22%;">Unit Price</th>
+              <th style="width:20%;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS will populate cart items here -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" style="text-align:right;">Order Total:</td>
+              <td id="cartTotal">₱0</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+      <!-- Customer Info Form -->
+      <section class="order-form-section" id="formSection">
+        <div class="form-title">Contact & Delivery Details</div>
+        <form class="order-form" id="orderForm" autocomplete="off">
+          <label for="customerName">Full Name</label>
+          <input type="text" id="customerName" name="customerName" required maxlength="60" placeholder="Enter your full name">
+          <label for="customerPhone">Mobile Number</label>
+          <input type="text" id="customerPhone" name="customerPhone" required maxlength="20" placeholder="e.g. 0917 123 4567">
+          <label for="customerAddress">Delivery Address</label>
+          <textarea id="customerAddress" name="customerAddress" required maxlength="180" placeholder="House number, street, barangay, city"></textarea>
+          <label for="paymentMethod">Preferred Payment Method</label>
+          <select id="paymentMethod" name="paymentMethod" required>
+            <option value="">-- Select --</option>
+            <option value="GCash">GCash</option>
+            <option value="Maya">Maya</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Cash on Delivery">Cash on Delivery</option>
+          </select>
+          <label for="orderNotes">Order Notes <span style="color:#a1e1e7;font-weight:400;">(optional)</span></label>
+          <textarea id="orderNotes" name="orderNotes" maxlength="240" placeholder="Let us know any special requests, specific colors, or preferred delivery time."></textarea>
+          <button type="submit">Submit Order</button>
+        </form>
+      </section>
+      <!-- Instructions -->
+      <section class="info-section">
+        <div class="info-title">How Your Order Will Be Handled</div>
         <ul>
-          <li>Verify item selection, quantity, and color/variant as needed</li>
-          <li>Confirm delivery address and time slot</li>
-          <li>Review your final order total and applicable fees</li>
+          <li>Once you submit your order, our team will promptly review your details. We will reach out via your provided contact to confirm <span class="emph">product colors, stock availability, and any special instructions</span>.</li>
+          <li>After you verify and confirm these details, a secure payment link will be sent to you based on your selected payment method.</li>
+          <li><span class="emph">Please ensure payment is completed within 24 hours</span> of receiving the link to avoid automatic order cancellation.</li>
+          <li>For your protection and ours, all orders require this confirmation step before payment is accepted. We are here to make your experience seamless and worry-free.</li>
         </ul>
-        Once confirmed, we’ll send your payment link or QR code.
-      </div>
-      <div class="info-title">⏳ Payment Deadline</div>
-      <div class="info-content">
-        To secure your order, payment must be completed within <b>24 hours</b> of receiving the link.<br>
-        Unpaid orders will be cancelled automatically after this period.
-      </div>
-      <div class="info-title">🚚 Delivery Timeline</div>
-      <div class="info-content">
-        Orders placed before 3:00 PM are eligible for same-day delivery within Antipolo and nearby barangays.<br>
-        Delivery time may vary based on location and weather.
-      </div>
-      <div class="info-title">📩 Need Help?</div>
-      <div class="info-content">
-        For any questions, you may contact us at <a href="mailto:hello@nicolevagrocery.com">hello@nicolevagrocery.com</a> or call/text <b>+63 917 938 1026</b>.<br>
-        Our team is happy to assist you.
-      </div>
-      <div style="margin-top:17px;">
-        We appreciate your trust in Nicoleva Grocery Hub.<br>
-        Providing quality groceries and service—always for your family!
-      </div>
+      </section>
+      <!-- Success Message -->
+      <section class="success-section" id="successSection">
+        <span style="font-size:1.25em;">🎉</span><br>
+        <div style="margin-top:10px;">
+          Thank you for sending your order!<br>
+          Our support team will be in touch soon to confirm <span class="emph">all order details</span> including product colors, availability, and delivery preferences.<br><br>
+          <strong>Please review and confirm our message</strong>. Once verified, we will send you a payment link for your chosen method.<br><br>
+          <span style="color:#ffe18d;">Kindly settle your payment within 24 hours of receiving the link</span> to secure your order. Orders left unpaid after this period will be automatically cancelled.<br><br>
+          We appreciate your trust in Nicoleva Grocery Hub!
+        </div>
+      </section>
     </div>
-    <a href="index.html" class="back-btn">← Back to Shop</a>
-  </div>
+  </main>
+  <footer>
+    &copy; 2025 Nicoleva Grocery Hub &middot; 
+    <a href="#privacy">Privacy Policy</a> &middot; 
+    <a href="#terms">Terms</a> &middot; 
+    <a href="#returns">Returns</a>
+    <br>
+    Block 7, Lot 4, Barangay Sta. Cruz, Antipolo, Rizal, Philippines &middot; 
+    <a href="mailto:hello@nicolevagrocery.com">hello@nicolevagrocery.com</a> &middot; 
+    +63 917 938 1026
+  </footer>
   <script>
-    // Payment Method Setup
-    const paymentGroups = [
-      [{ name: "GCash", icon: "assets/gcash.png" }],
-      [{ name: "Maya", icon: "assets/maya.png" }, { name: "Bank Transfer", icon: "assets/bank.png" }],
-      [{ name: "Cash on Delivery", icon: "" }]
-    ];
-    const paymentMethodsDiv = document.getElementById('payment-methods');
-    let paymentIdx = 0;
-    paymentGroups.forEach((group) => {
-      let groupDiv = document.createElement('div');
-      groupDiv.className = 'payment-row';
-      group.forEach(platform => {
-        let container = document.createElement('div');
-        container.className = 'payment-option';
-        container.tabIndex = 0;
-        container.setAttribute('role', 'radio');
-        container.setAttribute('aria-checked', 'false');
-        container.style.flex = "1";
-        let html = `<input type="radio" class="hidden-radio" name="pmethod" id="pmethod${paymentIdx}" value="${platform.name}">`;
-        if (platform.icon) html += `<img src="${platform.icon}" class="payment-icon" alt="${platform.name}">`;
-        html += `<span>${platform.name}</span>`;
-        container.innerHTML = html;
-        container.addEventListener('click', function(e) {
-          document.querySelectorAll('.payment-option').forEach((el, i) => {
-            el.classList.toggle('selected', el === container);
-            el.setAttribute('aria-checked', el === container ? 'true' : 'false');
-            el.querySelector('.hidden-radio').checked = el === container;
-          });
-          document.getElementById('payment-hidden').value = platform.name;
-        });
-        container.addEventListener('keydown', function(e) {
-          if (e.key === "Enter" || e.key === " ") container.click();
-        });
-        groupDiv.appendChild(container);
-        paymentIdx++;
-      });
-      paymentMethodsDiv.appendChild(groupDiv);
-    });
-
-    // Get cart from localStorage
-    const cart = JSON.parse(localStorage.getItem('nicoleva_cart') || "[]");
-    const orderList = document.getElementById('order-list');
-    const orderTotal = document.getElementById('order-total');
-    let total = 0;
-    if (cart.length === 0) {
-      orderList.innerHTML = "<li class='empty-cart'>Your cart is empty.</li>";
-      orderTotal.textContent = "";
-      document.getElementById('checkout-form').style.display = "none";
-    } else {
-      let detailsText = "";
-      cart.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.title} x ${item.qty}`;
-        orderList.appendChild(li);
-        total += (item.price ? (item.price * item.qty) : 0);
-        detailsText += `${item.title} x ${item.qty}${item.price ? ' - ₱' + (item.price * item.qty).toLocaleString() : ''}\n`;
-      });
-      orderTotal.textContent = total > 0 ? `Total: ₱${total.toLocaleString()}` : '';
-      document.getElementById('order-details-hidden').value = detailsText + (total > 0 ? `Total: ₱${total.toLocaleString()}` : '');
+    // --- Responsive cart summary population: simulate cart if none in session ---
+    function getCart() {
+      // Try to get cart from sessionStorage if available (simulate), else use demo
+      try {
+        var cart = JSON.parse(window.sessionStorage.getItem('nicoleva_cart'));
+        if(Array.isArray(cart) && cart.length > 0) return cart;
+      } catch(e){}
+      // Demo cart data if no cart in storage
+      return [
+        { name: "Daily Essentials", qty: 2, price: 49 },
+        { name: "Frozen & Refrigerated", qty: 1, price: 120 },
+        { name: "Snacks & Drinks", qty: 3, price: 65 }
+      ];
     }
+    function renderCart() {
+      var cart = getCart();
+      var tbody = document.querySelector('#cartList tbody');
+      var total = 0;
+      tbody.innerHTML = '';
+      cart.forEach(function(item){
+        var row = document.createElement('tr');
+        row.innerHTML =
+          '<td>'+item.name+'</td>'+
+          '<td>'+item.qty+'</td>'+
+          '<td>₱'+item.price+'</td>'+
+          '<td>₱'+(item.price*item.qty)+'</td>';
+        tbody.appendChild(row);
+        total += item.price*item.qty;
+      });
+      document.getElementById('cartTotal').textContent = '₱'+total;
+    }
+    renderCart();
 
-    // Form validation & submit
-    document.getElementById('checkout-form').onsubmit = function(e){
-      if (!document.getElementById('payment-hidden').value) {
-        alert("Please select your payment method.");
-        return false;
+    // --- Form submission and success message handling ---
+    document.getElementById('orderForm').onsubmit = function(e) {
+      e.preventDefault();
+      // Validate fields (HTML5 will handle required/maxlength, but extra check)
+      var name = document.getElementById('customerName').value.trim();
+      var phone = document.getElementById('customerPhone').value.trim();
+      var address = document.getElementById('customerAddress').value.trim();
+      var payment = document.getElementById('paymentMethod').value;
+      if(name.length < 2 || phone.length < 7 || address.length < 5 || !payment) {
+        alert('Please make sure all required fields are filled out completely.');
+        return;
       }
-      const name = document.getElementById('name').value.trim();
-      const address = document.getElementById('address').value.trim();
-      const barangay = document.getElementById('barangay').value.trim();
-      const city = document.getElementById('city').value.trim();
-      const contact = document.getElementById('contact').value.trim();
-      const email = document.getElementById('email').value.trim();
-      if (!name || !address || !barangay || !city || !contact || !email) {
-        alert("Please fill out all required fields.");
-        return false;
-      }
-      if (!/^09\d{9}$/.test(contact)) {
-        alert("Please enter a valid Philippine mobile number (09XXXXXXXXX).");
-        document.getElementById('contact').focus();
-        return false;
-      }
-      setTimeout(function() {
-        document.getElementById('checkout-form').style.display = "none";
-        document.getElementById('success-message').style.display = "";
-        localStorage.removeItem('nicoleva_cart');
-        orderList.innerHTML = "<li class='empty-cart'>Your cart is empty.</li>";
-        orderTotal.textContent = "";
-      }, 1200);
+      // Hide form and summary, show success message
+      document.getElementById('summarySection').style.display = 'none';
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('successSection').style.display = 'block';
+      window.scrollTo({top:0, behavior:'smooth'});
+      // (In real site: send order to backend here)
+      // Optionally clear cart in sessionStorage
+      try { window.sessionStorage.removeItem('nicoleva_cart'); } catch(e){}
     };
   </script>
 </body>
